@@ -14,7 +14,9 @@ exports.addCategory = asyncHandler( async ( req, res, next ) => {
         name: req.body.name,
         userId: req.user.id
     } );
-    if ( found && found.name === req.body.name ) {
+    // check if the owner is who is adding
+
+    if ( found && req.user.id === found.userId.toString() && found.name === req.body.name ) {
         return next( new ErrorResponse( `Category name already exist`, 400 ) );
     }
 

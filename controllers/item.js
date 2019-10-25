@@ -1,7 +1,9 @@
+// @ts-nocheck
 const Item = require( '../models/Item' );
 const ErrorResponse = require( '../utils/errorResponse' );
 const asyncHandler = require( '../middlewares/async' );
 const path = require( 'path' );
+const Grocery = require( '../models/Grocery' );
 
 // @desc     Add item to grocery only admin can add an item -- data need to be sent as form-data
 // @route    POST /api/admin/item
@@ -58,6 +60,13 @@ exports.addItem = asyncHandler( async ( req, res, next ) => {
         tempItem.imageURL = `${req.protocol}://${req.get('host')}/uploads/${fileName}`;
 
         const item = await Item.create( tempItem );
+
+        const grocery = await Grocery.findOne( {
+            userId: req.user.id
+        } );
+        grocery.items.push( item );
+
+        await grocery.save();
 
         return res.status( 200 ).json( {
             success: true,

@@ -28,7 +28,7 @@ exports.createGrocery = asyncHandler( async ( req, res, next ) => {
 
 exports.getGroceries = asyncHandler( async ( req, res, next ) => {
 
-    const groceries = await Grocery.find();
+    const groceries = await Grocery.find().populate( 'userId', '_id name' ).populate( 'items' );
     return res.status( 200 ).json( {
         success: true,
         data: groceries

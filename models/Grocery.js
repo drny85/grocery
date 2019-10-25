@@ -26,14 +26,15 @@ const gorcerySchema = new mongoose.Schema( {
         type: String,
         required: [ true, 'Please enter a zipcode' ]
     },
-    items: {
-        type: [ mongoose.Schema.Types.ObjectId ],
-        ref: 'Item'
-    },
+    items: [ {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Item",
+        unique: [ true, "item already exits" ]
+    } ],
 
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Uer'
+        ref: 'User'
     }
 } );
 
