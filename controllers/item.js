@@ -126,3 +126,19 @@ exports.deleteItem = asyncHandler( async ( req, res, next ) => {
     } )
 
 } );
+
+exports.getItemsByGroceryId = asyncHandler( async ( req, res, next ) => {
+
+    const groceryId = req.params.id;
+
+    const groceries = await Grocery.findById( groceryId ).populate( 'items' )
+    const items = groceries.items;
+
+
+
+    return res.status( 200 ).json( {
+        success: true,
+        count: items.length,
+        data: items
+    } )
+} )

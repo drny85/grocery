@@ -6,8 +6,8 @@ const itemSchema = new mongoose.Schema( {
     name: {
         type: String,
         required: [ true, 'Please add a name' ],
-        trim: true,
-        unique: [ true, 'This name already exist' ]
+        trim: true
+
     },
     price: {
         type: String,
