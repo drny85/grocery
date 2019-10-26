@@ -12,12 +12,17 @@ const {
     getGroceries,
     deleteGrocery,
     updateGrocery,
-    getGrocery
+    getGrocery,
+    getGroceriesByUser
 } = require( '../controllers/grocery' )
 
 router.route( '/' ).post( auth, admin, createGrocery ).get( getGroceries );
 
+router.route( '/user' ).get( auth, admin, getGroceriesByUser );
+
 router.route( '/:id' ).delete( auth, admin, deleteGrocery ).put( auth, admin, updateGrocery ).get( getGrocery );
+
+
 
 
 

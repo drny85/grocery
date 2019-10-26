@@ -101,3 +101,24 @@ exports.getGrocery = asyncHandler( async ( req, res, next ) => {
     } );
 
 } )
+
+// @desc     Get groceris by Owner or user
+// @route    GET api/grocery/user
+// @access   Private
+
+exports.getGroceriesByUser = asyncHandler( async ( req, res, next ) => {
+
+    const groceries = await Grocery.find( {
+        userId: {
+            _id: req.user.id
+        }
+    } )
+
+
+    return res.status( 200 ).json( {
+        success: true,
+        count: groceries.length,
+        data: groceries
+    } );
+
+} )

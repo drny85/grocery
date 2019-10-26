@@ -17,11 +17,13 @@ const {
 } = require( '../controllers/item' )
 
 
+router.route( '/grocery/:id' ).get( getItemsByGroceryId );
+
+
 router.route( '/' ).post( auth, admin, addItem ).get( getItems );
 
 router.route( '/:id' ).put( auth, admin, updateItem ).delete( auth, admin, deleteItem );
 
-router.route( '/grocery/:id' ).get( getItemsByGroceryId );
 
 
 module.exports = router;
