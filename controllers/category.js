@@ -16,12 +16,17 @@ exports.addCategory = asyncHandler( async ( req, res, next ) => {
     } );
     // check if the owner is who is adding
 
+    if ( !req.body.groceryId ) {
+        return next( new ErrorResponse( `please select a store/grocery for this item`, 400 ) );
+    }
+
     if ( found && req.user.id === found.userId.toString() && found.name === req.body.name ) {
         return next( new ErrorResponse( `Category name already exist`, 400 ) );
     }
 
     const category = await Category.create( {
         name: req.body.name,
+        grocery: req.body.groceryId,
         userId: req.user.id
     } );
 

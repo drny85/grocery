@@ -28,13 +28,13 @@ const gorcerySchema = new mongoose.Schema( {
     phone: {
         type: String,
         required: [ 'true', 'please enter a phone number' ],
-        minlength: [ 10, 'invalid phone number' ],
+        minlength: [ 12, 'invalid phone number format' ],
         maxlength: [ 12, 'phone number is too large' ]
     },
     items: [ {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Item",
-        unique: [ true, "item already exits" ]
+        ref: "Item"
+
     } ],
 
     userId: {

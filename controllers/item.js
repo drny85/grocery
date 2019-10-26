@@ -14,15 +14,19 @@ exports.addItem = asyncHandler( async ( req, res, next ) => {
         name: req.body.name,
         price: req.body.price,
         category: req.body.category,
-        userId: req.user.id
+        userId: req.user.id,
+        grocery: req.body.grocery
     }
-
+    // check that all fields are filled out and check that a groceryId was provided
     if ( !tempItem.name || !tempItem.price || !tempItem.category ) {
         return next( new ErrorResponse( `All fields are required`, 400 ) );
+    } else if ( !tempItem.grocery ) {
+        return next( new ErrorResponse( `Please select a store for this item`, 400 ) );
     }
+
     //CHECK IF ITEM NAME ALREADY EXIST
     const checkItem = await Item.findOne( {
-        name: tempItem.name,
+        name: req.body.name,
         userId: req.user.id
     } );
     if ( checkItem ) {
@@ -62,7 +66,8 @@ exports.addItem = asyncHandler( async ( req, res, next ) => {
         const item = await Item.create( tempItem );
 
         const grocery = await Grocery.findOne( {
-            userId: req.user.id
+            userId: req.user.id,
+            _id: req.body.grocery
         } );
         grocery.items.push( item );
 

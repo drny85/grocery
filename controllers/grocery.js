@@ -12,6 +12,10 @@ exports.createGrocery = asyncHandler( async ( req, res, next ) => {
     };
     body.userId = req.user.id
 
+    //check if phone was provided
+    if ( !body.phone ) {
+        return next( new ErrorResponse( 'please provide a phone number', 400 ) );
+    }
 
     const grocery = await Grocery.create( body );
 
@@ -31,6 +35,7 @@ exports.getGroceries = asyncHandler( async ( req, res, next ) => {
     const groceries = await Grocery.find().populate( 'userId', '_id name' ).populate( 'items' );
     return res.status( 200 ).json( {
         success: true,
+        count: groceries.length,
         data: groceries
     } )
 

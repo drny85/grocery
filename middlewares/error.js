@@ -8,6 +8,8 @@ const errorhandler = ( err, req, res, next ) => {
 
    error.message = err.message;
 
+   console.log( "ERROR", error );
+
    //Validation for bad Object ID
    if ( err.name === 'CastError' ) {
 

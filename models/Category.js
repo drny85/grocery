@@ -9,6 +9,12 @@ const categorySchema = new mongoose.Schema( {
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
+    },
+
+    grocery: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Grocery',
+        required: true
     }
 } );
 

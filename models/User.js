@@ -38,7 +38,11 @@ const userSchema = new mongoose.Schema( {
         type: String,
         enum: [ 'visitor', 'user', 'admin' ],
         default: 'visitor'
-    }
+    },
+    groceries: [ {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Grocery'
+    } ]
 
 
 } )

@@ -26,7 +26,7 @@ const itemSchema = new mongoose.Schema( {
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
-        required: [ true, 'Please select a category for this item' ]
+        required: true
     },
 
     imageURL: {
@@ -46,7 +46,8 @@ const itemSchema = new mongoose.Schema( {
 
     grocery: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Grocery'
+        ref: 'Grocery',
+        required: [ 'true', 'please specify an store for this item' ]
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
