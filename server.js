@@ -32,7 +32,6 @@ app.use( express.static( path.join( __dirname, 'public' ) ) );
 const groceryRoutes = require( './routers/grocery' );
 const itemRoutes = require( './routers/item' );
 const cartRoutes = require( './routers/cart' );
-const userRoutes = require( './routers/user' );
 const categoryRoutes = require( './routers/category' );
 const authRoutes = require( './routers/auth' );
 
@@ -41,7 +40,6 @@ const authRoutes = require( './routers/auth' );
 app.use( '/api/grocery', groceryRoutes );
 app.use( '/api/item', itemRoutes );
 app.use( '/api/cart', cartRoutes );
-app.use( '/api/user', userRoutes );
 app.use( '/api/category', categoryRoutes );
 app.use( '/api/auth', authRoutes )
 

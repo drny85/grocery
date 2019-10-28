@@ -2,6 +2,7 @@
 const Category = require( '../models/Category' );
 const asyncHandler = require( '../middlewares/async' );
 const ErrorResponse = require( '../utils/errorResponse' );
+const User = require( '../models/User' );
 
 
 
@@ -16,7 +17,7 @@ exports.addCategory = asyncHandler( async ( req, res, next ) => {
     } );
     // check if the owner is who is adding
 
-    if ( !req.body.groceryId ) {
+    if ( !req.body.grocery ) {
         return next( new ErrorResponse( `please select a store/grocery for this item`, 400 ) );
     }
 
@@ -24,9 +25,17 @@ exports.addCategory = asyncHandler( async ( req, res, next ) => {
         return next( new ErrorResponse( `Category name already exist`, 400 ) );
     }
 
+    const user = await User.findById( req.user.id );
+
+    for ( let i in user.groceries ) {
+        if ( user.groceries[ i ].toString() !== req.body.grocery ) {
+            return next( new ErrorResponse( 'you do not own this grocery', 401 ) );
+        }
+    }
+
     const category = await Category.create( {
         name: req.body.name,
-        grocery: req.body.groceryId,
+        grocery: req.body.grocery,
         userId: req.user.id
     } );
 
@@ -74,7 +83,16 @@ exports.deleteCategory = asyncHandler( async ( req, res, next ) => {
 // @access   Private -- Only admin
 exports.updateCategory = asyncHandler( async ( req, res, next ) => {
 
-    const found = await Category.findById( req.params.id )
+
+    const found = await Category.findOne( {
+        name: req.body.name,
+        userId: req.user.id
+    } );
+    // check if the owner is who is adding
+
+    if ( found && req.user.id === found.userId.toString() && found.name === req.body.name ) {
+        return next( new ErrorResponse( `Category name already exist`, 400 ) );
+    }
 
     if ( req.user.id !== found.userId.toString() ) {
         return next( new ErrorResponse( `Not authorized to update`, 401 ) );

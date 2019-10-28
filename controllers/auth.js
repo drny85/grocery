@@ -50,7 +50,7 @@ exports.login = asyncHandler( async ( req, res, next ) => {
     } ).select( '+password' );
 
     if ( !user ) {
-        return next( new ErrorResponse( 'Invalid email or password', 401 ) );
+        return next( new ErrorResponse( `no user found with email ${email}`, 401 ) );
     }
 
     //check if password matches

@@ -1,6 +1,8 @@
+// @ts-nocheck
 const Grocery = require( '../models/Grocery' );
 const asyncHandler = require( '../middlewares/async' );
 const ErrorResponse = require( '../utils/errorResponse' );
+const User = require( '../models/User' );
 
 // @desc     Create grocery
 // @route    POST /api/grocery
@@ -12,12 +14,41 @@ exports.createGrocery = asyncHandler( async ( req, res, next ) => {
     };
     body.userId = req.user.id
 
+    let grocery;
+
     //check if phone was provided
     if ( !body.phone ) {
         return next( new ErrorResponse( 'please provide a phone number', 400 ) );
     }
 
-    const grocery = await Grocery.create( body );
+    grocery = await Grocery.findOne( {
+        userId: req.user.id,
+        name: body.name
+    } )
+
+    if ( grocery ) {
+        return next( new ErrorResponse( 'this grocery name already exist, change the name', 400 ) );
+    }
+
+
+    const user = await User.findById( req.user.id ).populate( 'groceries' );
+    // add grocries to user's groceries andd check if user is admin
+    if ( user.role === 'admin' ) {
+        for ( let item in user.groceries ) {
+            // check if none of the groceries owned by user are not in pending status
+            if ( user.groceries[ item ].status === 'pending' ) {
+                return next( new ErrorResponse( 'You already sent a request to add a grocery and it is in pending status', 400 ) );
+            }
+
+        }
+
+    }
+    //save gorcery to database
+    grocery = await Grocery.create( body );
+
+    user.groceries.push( grocery );
+    await user.save();
+
 
     return res.status( 200 ).json( {
         success: true,
