@@ -14,6 +14,14 @@ exports.register = asyncHandler( async ( req, res, next ) => {
         password
     } = req.body;
 
+    const found = await User.findOne( {
+        email
+    } );
+
+    if ( found ) {
+        return next( new ErrorResponse( `${email} is already taken`, 400 ) );
+    }
+
     const user = await User.create( {
         name,
         email,

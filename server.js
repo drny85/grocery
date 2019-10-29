@@ -6,6 +6,8 @@ const fileUpload = require( 'express-fileupload' );
 const errorHandler = require( './middlewares/error' );
 const connectDB = require( './config/db' )
 const path = require( 'path' );
+const helmet = require('helmet')
+const cors = require('cors')
 const app = express();
 
 //loads env variables
@@ -15,6 +17,11 @@ dotenv.config( {
 
 //connect to database
 connectDB();
+
+app.use(helmet());
+
+app.use(cors());
+
 
 // default options
 app.use( fileUpload() );
@@ -34,6 +41,7 @@ const itemRoutes = require( './routers/item' );
 const cartRoutes = require( './routers/cart' );
 const categoryRoutes = require( './routers/category' );
 const authRoutes = require( './routers/auth' );
+const orderRoutes = require( './routers/order' );
 
 
 // routes
@@ -41,7 +49,8 @@ app.use( '/api/grocery', groceryRoutes );
 app.use( '/api/item', itemRoutes );
 app.use( '/api/cart', cartRoutes );
 app.use( '/api/category', categoryRoutes );
-app.use( '/api/auth', authRoutes )
+app.use( '/api/auth', authRoutes );
+app.use( '/api/order', orderRoutes )
 
 //custom error handler
 app.use( errorHandler );

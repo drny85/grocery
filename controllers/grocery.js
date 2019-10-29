@@ -12,9 +12,13 @@ exports.createGrocery = asyncHandler( async ( req, res, next ) => {
     const body = {
         ...req.body
     };
-    body.userId = req.user.id
+    //set the userId to the logged in user
+    body.userId = req.user.id;
+
 
     let grocery;
+
+
 
     //check if phone was provided
     if ( !body.phone ) {

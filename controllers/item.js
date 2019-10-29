@@ -4,6 +4,7 @@ const ErrorResponse = require( "../utils/errorResponse" );
 const asyncHandler = require( "../middlewares/async" );
 const path = require( "path" );
 const Grocery = require( "../models/Grocery" );
+const Category = require( '../models/Category' );
 
 // @desc     Add item to grocery only admin can add an item -- data need to be sent as form-data
 // @route    POST /api/admin/item
@@ -21,6 +22,11 @@ exports.addItem = asyncHandler( async ( req, res, next ) => {
         return next( new ErrorResponse( `All fields are required`, 400 ) );
     } else if ( !tempItem.grocery ) {
         return next( new ErrorResponse( `Please select a store for this item`, 400 ) );
+    }
+
+    const checkGrocery = await Category.findById( tempItem.category );
+    if ( !checkGrocery ) {
+        return next( new ErrorResponse( `we could not find this category ${tempItem.category}`, 400 ) );
     }
 
     //CHECK IF ITEM NAME ALREADY EXIST
@@ -88,7 +94,7 @@ exports.addItem = asyncHandler( async ( req, res, next ) => {
         }
 
         //change file name to be used as imageURL
-        tempItem.imageURL = `${req.protocol}://${req.get(
+        tempItem.imageURL = `${req.protocol}s://${req.get(
 			"host"
 		)}/uploads/${fileName}`;
 
