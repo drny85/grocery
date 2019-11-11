@@ -9,12 +9,12 @@ const path = require('path');
 const app = express();
 
 //loads env variables
-dotenv.config({path: './config/config.env'});
+dotenv.config({ path: './config/config.env' });
 
 //connect to database
 connectDB();
 
-// default options
+// default optionsç
 app.use(fileUpload());
 
 //parse body to json
@@ -46,7 +46,7 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000
 const server = app.listen(PORT, () => {
- console.log(`Server started in port ${PORT}`.cyan.underline);
+    console.log(`Server started in port ${PORT}`.cyan.underline);
 })
 
 process.on('unhandledRejection', (err, promise) => {

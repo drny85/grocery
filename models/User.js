@@ -15,7 +15,24 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, "please enter an email"],
-        unique: true
+        unique: [true, 'this email already exist'],
+        match: [/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Email is invalid']
+    },
+    password: {
+        type: String,
+        required: [true, 'please enter a password'],
+        minlength: [6, 'please enter at least 6 characters'],
+        select: false
+    },
+    role: {
+        type: String,
+        enum: ['visitor', 'user', 'admin'],
+        default: 'visitor'
+
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 })
 
