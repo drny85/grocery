@@ -1,41 +1,43 @@
-const ErrorResponse = require('../utils/errorResponse');
+const ErrorResponse = require( '../utils/errorResponse' );
 
-const errorhandler = (err, req, res, next) => {
+const errorhandler = ( err, req, res, next ) => {
 
-    let error = { ...err};
+   let error = {
+      ...err
+   };
 
-    error.message = err.message;
+   error.message = err.message;
 
-     console.log(err);
+   console.log( "ERROR", error );
 
-     //Validation for bad Object ID
-     if (err.name === 'CastError') {
-        
-        const message = `Resource not found with ID of ${err.value}`;
-        error = new ErrorResponse(message, 400)
-     }
-     //Validation for duplicate key
-     if (err.code === 11000) {
-        
-         const message = `Duplicate value was entered, please pick another one`;
-         error = new ErrorResponse(message, 404)
-     }
+   //Validation for bad Object ID
+   if ( err.name === 'CastError' ) {
 
-     if (err.name === 'MongoError') {
-        const message = `Duplicate value was entered, please pick another one`;
-        error = new ErrorResponse(message, 404)
-     }
+      const message = `Resource not found with ID of ${err.value}`;
+      error = new ErrorResponse( message, 400 )
+   }
+   //Validation for duplicate key
+   if ( err.code === 11000 ) {
 
-     //Validation Error
-     if(err.name === 'ValidationError') {
-        const message = Object.values(err.errors).map(val => val.message)
-        error = new ErrorResponse(message, 400);
-     }
+      const message = `Duplicate value was entered, please pick another one`;
+      error = new ErrorResponse( message, 404 )
+   }
 
-     res.status(error.statusCode || 500).json({
-         success: false,
-         error: error.message || "Server Error"
-     })
+   //   if (err.name === 'MongoError') {
+   //      const message = `Duplicate value was entered, please pick another one`;
+   //      error = new ErrorResponse(message, 404)
+   //   }
+
+   //Validation Error
+   if ( err.name === 'ValidationError' ) {
+      const message = Object.values( err.errors ).map( val => val.message )
+      error = new ErrorResponse( message, 400 );
+   }
+
+   res.status( error.statusCode || 500 ).json( {
+      success: false,
+      error: error.message || "Server Error"
+   } )
 }
 
 module.exports = errorhandler;
