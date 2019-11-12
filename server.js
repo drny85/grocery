@@ -54,18 +54,6 @@ app.use('/api/order', orderRoutes)
 //custom error handler
 app.use(errorHandler);
 
-<<<<<<< HEAD
-const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => {
-	console.log(`Server started in port ${PORT}`.cyan.underline);
-});
-
-process.on("unhandledRejection", (err, promise) => {
-	// @ts-ignore
-	console.log(`Error: ${err.message}`.red.underline);
-	server.close(() => process.exit(1));
-});
-=======
 const PORT = process.env.PORT || 5000
 const server = app.listen(PORT, () => {
     console.log(`Server started in port ${PORT}`.cyan.underline);
@@ -77,4 +65,3 @@ process.on('unhandledRejection', (err, promise) => {
     console.log(`Error: ${err.message}`.red.underline);
     server.close(() => process.exit(1))
 })
->>>>>>> 807b7f6d8aadfd0535c4965bb196154d132a0f9e
