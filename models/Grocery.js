@@ -42,6 +42,11 @@ const gorcerySchema = new mongoose.Schema( {
         ref: 'User'
     },
 
+    imageURL: {
+        type: String,
+        default: 'https://s3-media2.fl.yelpcdn.com/bphoto/LxAGWWxnA9uRxK5n_Xl3Fg/o.jpg'
+    },
+
     status: {
         type: String,
         enum: [ 'active', 'suspended', 'pending' ],

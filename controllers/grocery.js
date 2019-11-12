@@ -63,7 +63,7 @@ exports.createGrocery = asyncHandler( async ( req, res, next ) => {
 
 // @desc     Get groceries
 // @route    GET /api/grocery
-// @access   Private
+// @access   Public
 
 exports.getGroceries = asyncHandler( async ( req, res, next ) => {
 

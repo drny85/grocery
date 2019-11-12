@@ -10,12 +10,14 @@ const Category = require( '../models/Category' );
 // @route    POST /api/admin/item
 // @access   Private
 exports.addItem = asyncHandler( async ( req, res, next ) => {
+    console.log( req.body );
     const tempItem = {
         name: req.body.name,
         price: req.body.price,
         category: req.body.category,
         userId: req.user.id,
-        grocery: req.body.grocery
+        grocery: req.body.grocery,
+        description: req.body.description
     };
     // check that all fields are filled out and check that a groceryId was provided
     if ( !tempItem.name || !tempItem.price || !tempItem.category ) {
@@ -180,6 +182,11 @@ exports.getItemsByGroceryId = asyncHandler( async ( req, res, next ) => {
         data: groceries
     } );
 } );
+
+
+// @desc     Chnage all item photos names / url -- 
+// @route    PATCH /api/item/updateAllPhotosUrl
+// @access   Public
 
 exports.changeAllPicturesURL = asyncHandler( async ( req, res, next ) => {
 
