@@ -1,28 +1,31 @@
-const express = require( 'express' );
+const express = require('express');
 
 const router = express.Router();
 
 const {
     auth,
     admin
-} = require( '../middlewares/auth' )
+} = require('../middlewares/auth')
 
 const {
     addItem,
     getItems,
     updateItem,
     deleteItem,
-    getItemsByGroceryId
+    getItemsByGroceryId,
+    changeAllPicturesURL
 
-} = require( '../controllers/item' )
-
-
-router.route( '/grocery/:id' ).get( getItemsByGroceryId );
+} = require('../controllers/item')
 
 
-router.route( '/' ).post( auth, admin, addItem ).get( getItems );
+router.route('/grocery/:id').get(getItemsByGroceryId);
 
-router.route( '/:id' ).put( auth, admin, updateItem ).delete( auth, admin, deleteItem );
+router.patch('/updatedAllPhotosUrl', changeAllPicturesURL);
+
+
+router.route('/').post(auth, admin, addItem).get(getItems);
+
+router.route('/:id').put(auth, admin, updateItem).delete(auth, admin, deleteItem);
 
 
 
