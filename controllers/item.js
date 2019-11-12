@@ -112,6 +112,10 @@ exports.addItem = asyncHandler( async ( req, res, next ) => {
     } );
 } );
 
+// @desc     get all items / products
+// @route    GET /api/item
+// @access   Public
+
 exports.getItems = asyncHandler( async ( req, res, next ) => {
     const items = await Item.find().populate( "category" );
 
