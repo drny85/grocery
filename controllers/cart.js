@@ -15,6 +15,8 @@ exports.addToCart = asyncHandler( async ( req, res, next ) => {
         cartId
     } = req.body;
 
+    console.log( 'BODY', req.body );
+
     //const found = await Cart.findById( req.cart._id )
     if ( cartId === "" || cartId === null || cartId === undefined ) {
         cart = await Cart.create( {} );

@@ -1,11 +1,12 @@
-const express = require('express');
+const express = require( 'express' );
 
 const router = express.Router();
+
 
 const {
     auth,
     admin
-} = require('../middlewares/auth')
+} = require( '../middlewares/auth' )
 
 const {
     addItem,
@@ -13,19 +14,22 @@ const {
     updateItem,
     deleteItem,
     getItemsByGroceryId,
-    changeAllPicturesURL
+    changeAllPicturesURL,
+    testFile
 
-} = require('../controllers/item')
-
-
-router.route('/grocery/:id').get(getItemsByGroceryId);
-
-router.patch('/updatedAllPhotosUrl', changeAllPicturesURL);
+} = require( '../controllers/item' )
 
 
-router.route('/').post(auth, admin, addItem).get(getItems);
+router.route( '/grocery/:id' ).get( getItemsByGroceryId );
 
-router.route('/:id').put(auth, admin, updateItem).delete(auth, admin, deleteItem);
+router.put( '/testFile', testFile );
+
+router.patch( '/updatedAllPhotosUrl', changeAllPicturesURL );
+
+
+router.route( '/' ).post( auth, admin, addItem ).get( getItems );
+
+router.route( '/:id' ).put( auth, admin, updateItem ).delete( auth, admin, deleteItem );
 
 
 

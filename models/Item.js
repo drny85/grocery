@@ -31,8 +31,8 @@ const itemSchema = new mongoose.Schema( {
     },
 
     imageURL: {
-        type: String
-        //required: [true, 'Please upload a photo for this item']
+        type: String,
+        required: [ true, 'Please upload a photo for this item' ]
 
     },
 

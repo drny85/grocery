@@ -6,11 +6,14 @@ const path = require( "path" );
 const Grocery = require( "../models/Grocery" );
 const Category = require( '../models/Category' );
 
+
 // @desc     Add item to grocery only admin can add an item -- data need to be sent as form-data
 // @route    POST /api/admin/item
 // @access   Private
 exports.addItem = asyncHandler( async ( req, res, next ) => {
     console.log( req.body );
+    console.log( req );
+
     const tempItem = {
         name: req.body.name,
         price: req.body.price,
@@ -216,5 +219,17 @@ exports.changeAllPicturesURL = asyncHandler( async ( req, res, next ) => {
         success: true
     } );
 
+
+} );
+
+exports.testFile = asyncHandler( async ( req, res, next ) => {
+
+    console.log( req.files );
+    console.log( req.body );
+
+
+    return res.json( {
+        success: true
+    } );
 
 } );
