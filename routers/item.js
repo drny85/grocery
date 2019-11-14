@@ -1,6 +1,10 @@
 const express = require( 'express' );
 
 const router = express.Router();
+const multer = require( 'multer' );
+const upload = multer( {
+    dest: '../public/uploads'
+} );
 
 
 const {
@@ -15,14 +19,12 @@ const {
     deleteItem,
     getItemsByGroceryId,
     changeAllPicturesURL,
-    testFile
+    // testFile
 
 } = require( '../controllers/item' )
 
 
 router.route( '/grocery/:id' ).get( getItemsByGroceryId );
-
-router.put( '/testFile', testFile );
 
 router.patch( '/updatedAllPhotosUrl', changeAllPicturesURL );
 

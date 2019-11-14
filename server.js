@@ -25,10 +25,11 @@ app.use( helmet() );
 app.use( cors() );
 
 // default options
-app.use( fileUpload() );
+
 
 //parse body to json
 app.use( express.json() );
+app.use( express.urlencoded() );
 
 // run  morgan middleware for logging
 app.use( morgan( 'dev' ) );

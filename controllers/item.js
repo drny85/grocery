@@ -221,15 +221,3 @@ exports.changeAllPicturesURL = asyncHandler( async ( req, res, next ) => {
 
 
 } );
-
-exports.testFile = asyncHandler( async ( req, res, next ) => {
-
-    console.log( req.files );
-    console.log( req.body );
-
-
-    return res.json( {
-        success: true
-    } );
-
-} );
